@@ -224,11 +224,12 @@ ifdef(`distro_debian',`
 	')
 ')
 
-ifdef(`distro_gentoo',`
+# ifdef(`distro_gentoo',`
+    # Artix
 	# during boot, init scripts use /dev/.rcsysinit
 	# existence to determine if we are in early booting
 	init_getattr_script_status_files(udev_t)
-')
+# ')
 
 ifdef(`distro_redhat',`
 	fs_manage_tmpfs_dirs(udev_t)

@@ -74,11 +74,12 @@ ifdef(`distro_suse',`
 
 /etc/zfs/zpool\.cache	--	gen_context(system_u:object_r:etc_runtime_t,s0)
 
-ifdef(`distro_gentoo', `
+# ifdef(`distro_gentoo', `
+# Artix
 /etc/profile\.env	--	gen_context(system_u:object_r:etc_runtime_t,s0)
 /etc/csh\.env		--	gen_context(system_u:object_r:etc_runtime_t,s0)
 /etc/env\.d/.*		--	gen_context(system_u:object_r:etc_runtime_t,s0)
-')
+# ')
 
 ifdef(`distro_redhat',`
 /etc/rhgb(/.*)?		-d	gen_context(system_u:object_r:mnt_t,s0)

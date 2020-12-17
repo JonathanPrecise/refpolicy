@@ -1826,13 +1826,14 @@ interface(`init_spec_domtrans_script',`
 	files_list_etc($1)
 	spec_domtrans_pattern($1, initrc_exec_t, initrc_t)
 
-	ifdef(`distro_gentoo',`
+#	ifdef(`distro_gentoo',`
+        # Gentoo/Artix
 		gen_require(`
 			type rc_exec_t;
 		')
 
 		domtrans_pattern($1, rc_exec_t, initrc_t)
-	')
+#	')
 
 	ifdef(`enable_mcs',`
 		range_transition $1 initrc_exec_t:process s0;
@@ -2069,37 +2070,39 @@ interface(`init_get_script_status',`
 ## </param>
 #
 interface(`init_startstop_service',`
-	ifelse(`init_systemd',`true',`
-		# This ifelse condition is temporary, until
-		# all callers are updated to provide unit files.
-		ifelse(`$5',`',`',`
-			gen_require(`
-				class service { start status stop };
-			')
-
-			allow $1 $5:service { start status stop };
-		')
-
-	',`distro_gentoo',`true',`
-		# for OpenRC
-		seutil_labeled_init_script_run_runinit($1, $2, $4)
-
-	',`direct_sysadm_daemon',`true',`
-		gen_require(`
-			role system_r;
-		')
-
-		# rules for sysvinit / upstart
-		init_labeled_script_domtrans($1, $4)
-		domain_system_change_exemption($1)
-		role_transition $2 $4 system_r;
-		allow $2 system_r;
-
-	',` dnl else
-		optional_policy(`
-			seutil_run_runinit($1, $2)
-		')
-	')
+#	ifelse(`init_systemd',`true',`
+#		# This ifelse condition is temporary, until
+#		# all callers are updated to provide unit files.
+#		ifelse(`$5',`',`',`
+#			gen_require(`
+#				class service { start status stop };
+#			')
+#
+#			allow $1 $5:service { start status stop };
+#		')
+#
+#	',`distro_gentoo',`true',`
+#		# for OpenRC
+#		seutil_labeled_init_script_run_runinit($1, $2, $4)
+#
+#	',`direct_sysadm_daemon',`true',`
+#		gen_require(`
+#			role system_r;
+#		')
+#
+#		# rules for sysvinit / upstart
+#		init_labeled_script_domtrans($1, $4)
+#		domain_system_change_exemption($1)
+#		role_transition $2 $4 system_r;
+#		allow $2 system_r;
+#
+#	',` dnl else
+#		optional_policy(`
+#			seutil_run_runinit($1, $2)
+#		')
+#	')
+    # Artix
+	seutil_labeled_init_script_run_runinit($1, $2, $4)
 ')
 
 ########################################

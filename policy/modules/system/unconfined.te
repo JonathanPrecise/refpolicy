@@ -52,10 +52,10 @@ ifdef(`direct_sysadm_daemon',`
                 init_run_daemon(unconfined_t, unconfined_r)
         ')
 ',`
-        ifdef(`distro_gentoo',`
+#        ifdef(`distro_gentoo',`
                 seutil_run_runinit(unconfined_t, unconfined_r)
                 seutil_init_script_run_runinit(unconfined_t, unconfined_r)
-        ')
+#        ')
 ')
 
 ifdef(`init_systemd',`

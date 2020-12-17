@@ -60,16 +60,17 @@ ifdef(`direct_sysadm_daemon',`
 		init_run_daemon(sysadm_t, sysadm_r)
 	')
 ',`
-	ifdef(`distro_gentoo',`
+#	ifdef(`distro_gentoo',`
 		optional_policy(`
 			seutil_init_script_run_runinit(sysadm_t, sysadm_r)
 		')
-	')
+#	')
 ')
 
-ifdef(`distro_gentoo',`
+# ifdef(`distro_gentoo',`
+    # ARTIX
 	init_exec_rc(sysadm_t)
-')
+# ')
 
 ifndef(`enable_mls',`
 	logging_manage_audit_log(sysadm_t)
